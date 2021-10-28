@@ -37,6 +37,7 @@ public class JavaReflectionExamples {
         subjectNameField.setAccessible(true);
         String subjectName = (String) subjectNameField.get(subject);
         System.out.println(subjectName);
-
+        subjectNameField.set(subject, "Programming");
+        System.out.println((String) subjectNameField.get(subject));
     }
 }
