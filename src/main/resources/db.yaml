@@ -1,0 +1,5 @@
+database:
+  request:
+    timeout: 50000
+    read:
+      timeout: 300000

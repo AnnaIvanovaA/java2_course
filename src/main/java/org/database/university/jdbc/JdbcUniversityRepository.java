@@ -22,7 +22,7 @@ public class JdbcUniversityRepository implements UniversityRepository {
         try (Connection connection = dbService.openConnection()){
             //entry point with db
             Statement stmt = connection.createStatement();
-            ResultSet resultSet = stmt.executeQuery("select * from university");
+            ResultSet resultSet = stmt.executeQuery(JdbcSqls.SELECT_ALL_UNIVERSITIES);
 
             return retrieveFromResultSet(resultSet);
 
