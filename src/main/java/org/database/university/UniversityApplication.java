@@ -20,8 +20,17 @@ public class UniversityApplication {
         AnnotationConfigurationPropertiesProcessor.processConfigurationFile(configurationFilename);
         System.out.println("Application loaded all configuration files");
         System.out.println(DatabaseConfiguration.getInstance().toString());
+        DatabaseService dbService = new DatabaseService(DatabaseConfiguration.getInstance());
+        dbService.fillPool();
+        System.out.println("Connection pool has been initialized");
         System.out.println("University application has been started");
 
+
+        Connection proxy = dbService.openConnection();
+        proxy.createStatement();
+        proxy.close();
+        proxy.commit();
+        System.out.println();
 
 
 //        DatabaseService dbService = new DatabaseService();
