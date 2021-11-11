@@ -1,16 +1,14 @@
 package org.database.university;
 
 import org.database.university.configuration.DatabaseConfiguration;
+import org.database.university.configuration.HibernateConfiguration;
 import org.database.university.domain.University;
-import org.database.university.jdbc.DatabaseService;
-import org.database.university.jdbc.JdbcUniversityRepository;
 import org.database.university.reflect.AnnotationConfigurationPropertiesProcessor;
-import org.database.university.reflect.ConfigurationPropertiesProcessor;
 import org.database.university.repository.UniversityRepository;
+import org.database.university.repository.hbm.HibernateUniversityRepository;
+import org.hibernate.SessionFactory;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 
 public class UniversityApplication {
 
@@ -19,18 +17,28 @@ public class UniversityApplication {
         //ConfigurationPropertiesProcessor.processConfigurationFile(configurationFilename);
         AnnotationConfigurationPropertiesProcessor.processConfigurationFile(configurationFilename);
         System.out.println("Application loaded all configuration files");
+        HibernateConfiguration.configure(DatabaseConfiguration.getInstance());
+        System.out.println("Hibernate has been configured successfully");
+
         System.out.println(DatabaseConfiguration.getInstance().toString());
-        DatabaseService dbService = new DatabaseService(DatabaseConfiguration.getInstance());
-        dbService.fillPool();
-        System.out.println("Connection pool has been initialized");
+
+        SessionFactory factory = HibernateConfiguration.getSessionFactory();
+//        DatabaseService dbService = new DatabaseService(DatabaseConfiguration.getInstance());
+//        dbService.fillPool();
+//        System.out.println("Connection pool has been initialized");
         System.out.println("University application has been started");
 
 
-        Connection proxy = dbService.openConnection();
-        proxy.createStatement();
-        proxy.close();
-        proxy.commit();
-        System.out.println();
+        UniversityRepository universityRepository = new HibernateUniversityRepository(factory);
+        University u = universityRepository.createUniversity("fsdf", "VSHE", null);
+
+
+        factory.close();
+//        Connection proxy = dbService.openConnection();
+//        proxy.createStatement();
+//        proxy.close();
+//        proxy.commit();
+//        System.out.println();
 
 
 //        DatabaseService dbService = new DatabaseService();

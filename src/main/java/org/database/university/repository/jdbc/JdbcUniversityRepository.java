@@ -1,6 +1,7 @@
-package org.database.university.jdbc;
+package org.database.university.repository.jdbc;
 
 import org.database.university.domain.University;
+import org.database.university.jdbc.DatabaseService;
 import org.database.university.repository.UniversityRepository;
 
 import java.sql.*;

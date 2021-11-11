@@ -1,4 +1,4 @@
-package org.database.university.jdbc;
+package org.database.university.repository.jdbc;
 
 public class JdbcSqls {
 

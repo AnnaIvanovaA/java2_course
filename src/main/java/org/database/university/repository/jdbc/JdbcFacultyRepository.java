@@ -1,4 +1,6 @@
-package org.database.university.jdbc;
+package org.database.university.repository.jdbc;
+
+import org.database.university.jdbc.DatabaseService;
 
 import java.sql.Connection;
 import java.sql.SQLException;
