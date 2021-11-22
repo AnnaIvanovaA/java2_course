@@ -1,5 +1,6 @@
 package org.database.university.domain;
 
+<<<<<<< HEAD
 
 import lombok.Data;
 import lombok.ToString;
@@ -42,3 +43,7 @@ public class Faculty {
 }
 
 
+=======
+public class Faculty {
+}
+>>>>>>> mockito and junit
