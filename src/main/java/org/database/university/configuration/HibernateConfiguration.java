@@ -1,5 +1,6 @@
 package org.database.university.configuration;
 
+import org.database.university.domain.Faculty;
 import org.database.university.domain.University;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
@@ -22,7 +23,9 @@ public class HibernateConfiguration {
                 .build();
 
         Configuration cfg = new Configuration()
-                .addAnnotatedClass(University.class);
+                .addAnnotatedClass(University.class)
+                .addAnnotatedClass(Faculty.class);
+
 
         factory = cfg.buildSessionFactory(ssr);
 

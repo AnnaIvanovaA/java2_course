@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 //University -> table 'university'
 @Setter
@@ -28,14 +30,28 @@ public class University {
     @Column(name = "foundation_year")
     private Integer foundationYear;
 
+    // 1-M
+    @OneToMany(mappedBy = "university", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Faculty> faculties;
+
 
     public University(String name, String shortName, Integer foundationYear) {
         this.name = name;
         this.shortName = shortName;
         this.foundationYear = foundationYear;
+        this.faculties = new ArrayList<>();
     }
 
-//    public University() {
+    public University(Long universityId, String name, String shortName, Integer foundationYear) {
+        this.universityId = universityId;
+        this.name = name;
+        this.shortName = shortName;
+        this.foundationYear = foundationYear;
+        this.faculties = new ArrayList<>();
+    }
+
+
+    //    public University() {
 //    }
 //
 //    public University(Long universityId, String name, String shortName, Integer foundationYear) {

@@ -1,13 +1,18 @@
 package org.database.university.repository.jdbc;
 
+import org.database.university.domain.Faculty;
 import org.database.university.domain.University;
 import org.database.university.jdbc.DatabaseService;
 import org.database.university.repository.UniversityRepository;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static org.database.university.configuration.HibernateConfiguration.factory;
 
 public class JdbcUniversityRepository implements UniversityRepository {
 
@@ -65,8 +70,7 @@ public class JdbcUniversityRepository implements UniversityRepository {
 //            }
 
 
-
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("Couldn't insert new university because of an error: " + e.getMessage());
         }
 
@@ -74,10 +78,37 @@ public class JdbcUniversityRepository implements UniversityRepository {
         return null;
     }
 
+    @Override
+    public University createUniversity(String name, String shortName, Integer foundationYear, List<String> facultyNames) {
+        try (Session session = factory.openSession()) {
+            Transaction tx = session.beginTransaction();
+
+            University university = new University(name, shortName, foundationYear);
+
+            for (String facultyName : facultyNames) {
+                Faculty faculty = new Faculty();
+                faculty.setName(facultyName);
+                faculty.setUniversity(university);
+
+                university.getFaculties().add(faculty);
+            }
+            session.persist(university);
+
+            tx.commit();
+            return university;
+        }
+
+    }
+
+    @Override
+    public University findByUniversityId(Long universityId) {
+        return null;
+    }
+
     private List<University> retrieveFromResultSet(ResultSet resultSet) throws SQLException {
         List<University> universities = new ArrayList<>();
         //ResultSet -- iterator
-        while (resultSet.next()){
+        while (resultSet.next()) {
             Long universityId = resultSet.getLong("id"); //columnName from select, not from db
             String name = resultSet.getString("name");
             String shortName = resultSet.getString("short_name");

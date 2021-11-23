@@ -10,4 +10,9 @@ public interface UniversityRepository {
 
     University createUniversity(String name, String shortName, Integer foundationYear);
 
+    University createUniversity(String name, String shortName, Integer foundationYear, List<String> facultyNames);
+
+    University findByUniversityId(Long universityId);
+
+
 }
